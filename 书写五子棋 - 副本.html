@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style type="text/css">
+  
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" class="canvas" width="450" height="450">
+    您的浏览器不支持canvas技术,请升级浏览器!
+  </canvas>
+  <button id="clear">清空</button>
+</body>
+
+</html>
+<script type="text/javascript">
+var canvas = document.getElementById("canvas");
+var cx = canvas.getContext("2d");
+cx.fillStyle= "blue";
+cx.fillRect(0,0,450,450);
+init();
+function init(){
+	cx.clearRect(0,0,450,450);
+	
+	
+	cx.beginPath();
+	var len = 15;
+	cx.lineWidth = 1;
+	for(var i = 0 ;i < len ; i++){
+		cx.moveTo(15,15+30*i);
+		cx.lineTo(15+30*(len-1),15+30*i);
+		
+		cx.moveTo(15+30*i,15);
+		cx.lineTo(15+30*i,15+30*(len-1));
+	}
+
+
+	cx.strokeStyle = "#666";
+	cx.stroke();
+	cx.closePath();
+}
+var clear = document.getElementById("clear");
+clear.onclick = init;
+
+var isDowning = false;
+canvas.addEventListener("mousedown",function(e){
+	var point = {
+		x:e.offsetX,
+		y:e.offsetY,
+	}
+	start(point);
+})
+
+canvas.addEventListener("mousemove",function(e){
+	if(isDowning){
+	
+		var point = {
+			x:e.offsetX,
+			y:e.offsetY,
+		}
+		dowing(point);
+	}
+})
+canvas.addEventListener("mouseup",function(e){
+	end();
+})
+function start(point){
+	isDowning = true;
+	cx.beginPath();
+	cx.strokeStyle = "#000";
+	cx.lineWidth = 10;
+	cx.lineCap="round";
+	cx.lineJoin="round";
+	cx.moveTo(point.x,point.y);
+}
+function dowing(point){
+	cx.lineTo(point.x,point.y);
+	cx.stroke();
+}
+function end(){
+	isDowning = false;
+	cx.closePath();
+}
+
+
+var a=[[0,0],[0,0]]
+
+console.log(a);
+
+
+</script>
